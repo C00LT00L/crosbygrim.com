@@ -2,37 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Console Screen</title>
+  <title>Console</title>
   <style>
     body {
       margin: 0;
       padding: 10px;
-      background-color: white;
+      background: white;
       color: black;
       font-family: monospace;
-      font-size: 16px;
-      overflow: hidden;
     }
-
-    #console {
-      white-space: pre;
-    }
-
+    #console { white-space: pre-wrap; }
     .blinking-cursor {
       display: inline-block;
       width: 10px;
       animation: blink 1s step-end infinite;
     }
-
     @keyframes blink {
-      from, to { background: transparent; }
       50% { background: black; }
     }
   </style>
 </head>
 <body>
-  <div id="console">
-    Welcome to crosbygrim.com<span class="blinking-cursor"> </span>
-  </div>
+  <div id="console"></div>
+  <script>
+    const consoleDiv = document.getElementById("console");
+    let inputBuffer = "";
+
+    const updateDisplay = () => {
+      consoleDiv.innerText = inputBuffer;
+      const cursor = document.createElement("span");
+      cursor.className = "blinking-cursor";
+      cursor.innerHTML = "&nbsp;";
+      consoleDiv.appendChild(cursor);
+    };
+
+    updateDisplay();
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        fetch("/save", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input: inputBuffer })
+        }).then(() => {
+          inputBuffer = "";
+          updateDisplay();
+        });
+      } else if (e.key === "Backspace") {
+        inputBuffer = inputBuffer.slice(0, -1);
+        updateDisplay();
+      } else if (e.key.length === 1) {
+        inputBuffer += e.key;
+        updateDisplay();
+      }
+    });
+  </script>
 </body>
 </html>
