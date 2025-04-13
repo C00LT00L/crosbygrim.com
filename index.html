@@ -2,75 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Click Chase</title>
+  <title>Image Display</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
+      margin: 0;
       background-color: black;
-      color: white;
-      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
-      width: 100vw;
-      position: relative;
-      overflow: hidden;
     }
 
-    #score {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      font-size: 1.5rem;
-    }
-
-    #clicker {
-      position: absolute;
-      padding: 1rem 2rem;
-      font-size: 1.2rem;
-      background-color: white;
-      color: black;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.1s ease;
-    }
-
-    #clicker:active {
-      transform: scale(0.95);
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
   </style>
 </head>
 <body>
-  <div id="score">Score: 0</div>
-  <button id="clicker">Click me</button>
-
-  <script>
-    const button = document.getElementById('clicker');
-    const scoreDisplay = document.getElementById('score');
-    let score = 0;
-
-    function moveButton() {
-      const maxX = window.innerWidth - button.offsetWidth;
-      const maxY = window.innerHeight - button.offsetHeight;
-
-      const x = Math.random() * maxX;
-      const y = Math.random() * maxY;
-
-      button.style.left = `${x}px`;
-      button.style.top = `${y}px`;
-    }
-
-    button.addEventListener('click', () => {
-      score++;
-      scoreDisplay.textContent = `Score: ${score}`;
-      moveButton();
-    });
-
-    window.onload = moveButton;
-    window.onresize = moveButton;
-  </script>
+  <img src="my-image.jpg" alt="Displayed Image">
 </body>
 </html>
