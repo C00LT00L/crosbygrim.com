@@ -2,115 +2,75 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>crosbygrim.com</title>
+  <title>Click Chase</title>
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
     body {
-      margin: 0;
-      padding: 1rem;
-      height: 100vh;
       background-color: black;
       color: white;
-      font-family: 'Courier New', Courier, monospace;
-      overflow: hidden;
+      font-family: sans-serif;
+      height: 100vh;
+      width: 100vw;
       position: relative;
+      overflow: hidden;
     }
 
-    #terminal {
-      white-space: pre-wrap;
-      font-size: 1rem;
-      text-shadow: 0 0 3px white;
-      z-index: 2;
-    }
-
-    #input-line {
-      display: inline;
-    }
-
-    .cursor {
-      display: inline;
-      color: white;
-      animation: blink 0.7s step-start infinite;
-    }
-
-    @keyframes blink {
-      50% {
-        opacity: 0;
-      }
-    }
-
-    body::before {
-      content: "";
+    #score {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.03) 1px,
-        rgba(0, 0, 0, 0) 2px
-      );
-      pointer-events: none;
-      z-index: 1;
+      top: 1rem;
+      left: 1rem;
+      font-size: 1.5rem;
+    }
+
+    #clicker {
+      position: absolute;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      background-color: white;
+      color: black;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    #clicker:active {
+      transform: scale(0.95);
     }
   </style>
 </head>
 <body>
-  <div id="terminal">
-    Welcome to crosbygrim.com  
-    <br><br>
-    <span id="input-line">> <span id="command"></span><span class="cursor">_</span></span>
-  </div>
+  <div id="score">Score: 0</div>
+  <button id="clicker">Click me</button>
 
   <script>
-    const terminal = document.getElementById('terminal');
-    const commandEl = document.getElementById('command');
-    let command = '';
+    const button = document.getElementById('clicker');
+    const scoreDisplay = document.getElementById('score');
+    let score = 0;
 
-    const commands = {
-      help: "Available commands: help, about, clear, whoami",
-      about: "This is a retro terminal interface for crosbygrim.com",
-      clear: "__clear__",
-      whoami: "guest"
-    };
+    function moveButton() {
+      const maxX = window.innerWidth - button.offsetWidth;
+      const maxY = window.innerHeight - button.offsetHeight;
 
-    function printOutput(text) {
-      const inputLine = document.getElementById('input-line');
-      const userInput = document.createElement("div");
-      userInput.textContent = "> " + command;
-      terminal.insertBefore(userInput, inputLine);
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
 
-      if (text === "__clear__") {
-        terminal.innerHTML = "<span id='input-line'>> <span id='command'></span><span class='cursor'>_</span></span>";
-      } else {
-        const response = document.createElement("div");
-        response.textContent = text;
-        terminal.insertBefore(response, inputLine);
-      }
-
-      command = '';
-      commandEl.textContent = '';
-      window.scrollTo(0, document.body.scrollHeight);
+      button.style.left = `${x}px`;
+      button.style.top = `${y}px`;
     }
 
-    window.addEventListener('keydown', (e) => {
-      const key = e.key;
-
-      if (key === "Backspace") {
-        command = command.slice(0, -1);
-        commandEl.textContent = command;
-      } else if (key === "Enter") {
-        const output = commands[command.toLowerCase()] || `"${command}" is not recognized. Type "help" for a list of commands.`;
-        printOutput(output);
-      } else if (key.length === 1) {
-        command += key;
-        commandEl.textContent = command;
-      }
+    button.addEventListener('click', () => {
+      score++;
+      scoreDisplay.textContent = `Score: ${score}`;
+      moveButton();
     });
+
+    window.onload = moveButton;
+    window.onresize = moveButton;
   </script>
 </body>
 </html>
