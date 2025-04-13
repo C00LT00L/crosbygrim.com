@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Image Display</title>
+  <meta charset="UTF-8">
+  <title>Console Screen</title>
   <style>
     body {
       margin: 0;
-      background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      padding: 10px;
+      background-color: white;
+      color: black;
+      font-family: monospace;
+      font-size: 16px;
+      overflow: hidden;
     }
 
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
+    #console {
+      white-space: pre;
+    }
+
+    .blinking-cursor {
+      display: inline-block;
+      width: 10px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      from, to { background: transparent; }
+      50% { background: black; }
     }
   </style>
 </head>
 <body>
-  <img src="parkpointplate.JPG" alt="Displayed Image">
+  <div id="console">
+    Welcome to crosbygrim.com<span class="blinking-cursor"> </span>
+  </div>
 </body>
 </html>
