@@ -28,25 +28,28 @@
     }
     .links {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
     a {
       text-decoration: none;
-      color: white;
+      color: black;
       font-size: 1.3rem;
-      padding: 1rem 3rem;
-      border: 2px solid white;
-      border-radius: 50px;
-      background: transparent;
-      transition: all 0.3s ease;
-      font-weight: 300;
-      letter-spacing: 0.05rem;
+      padding: 2rem;
+      background-color: white;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
     a:hover {
-      background-color: white;
-      color: black;
       transform: scale(1.05);
+      background-color: #eaeaea;
     }
     footer {
       margin-top: auto;
