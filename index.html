@@ -1,61 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Console</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MONOCHROME</title>
   <style>
-    body {
+    * {
       margin: 0;
-      padding: 10px;
-      background: white;
-      color: black;
-      font-family: monospace;
+      padding: 0;
+      box-sizing: border-box;
     }
-    #console { white-space: pre-wrap; }
-    .blinking-cursor {
-      display: inline-block;
-      width: 10px;
-      animation: blink 1s step-end infinite;
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      overflow-x: hidden;
     }
-    @keyframes blink {
-      50% { background: black; }
+    header {
+      padding: 2rem;
+      text-align: center;
+      font-size: 3rem;
+      letter-spacing: 0.2rem;
+      border-bottom: 1px solid #555;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .card {
+      background: #111;
+      padding: 1.5rem;
+      border: 1px solid #444;
+      border-radius: 0.5rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.03);
+      background: #222;
+    }
+    .card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      border-bottom: 1px solid #555;
+      padding-bottom: 0.5rem;
+    }
+    .card p {
+      color: #bbb;
+      line-height: 1.5;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid #555;
+      font-size: 0.9rem;
+      color: #666;
     }
   </style>
 </head>
 <body>
-  <div id="console"></div>
-  <script>
-    const consoleDiv = document.getElementById("console");
-    let inputBuffer = "";
-
-    const updateDisplay = () => {
-      consoleDiv.innerText = inputBuffer;
-      const cursor = document.createElement("span");
-      cursor.className = "blinking-cursor";
-      cursor.innerHTML = "&nbsp;";
-      consoleDiv.appendChild(cursor);
-    };
-
-    updateDisplay();
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        fetch("/save", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ input: inputBuffer })
-        }).then(() => {
-          inputBuffer = "";
-          updateDisplay();
-        });
-      } else if (e.key === "Backspace") {
-        inputBuffer = inputBuffer.slice(0, -1);
-        updateDisplay();
-      } else if (e.key.length === 1) {
-        inputBuffer += e.key;
-        updateDisplay();
-      }
-    });
-  </script>
+  <header>MONOCHROME</header>
+  <section class="grid">
+    <div class="card">
+      <h2>Void</h2>
+      <p>A contemplation on absence. Where white fades, black begins. A dance between nothing and everything.</p>
+    </div>
+    <div class="card">
+      <h2>Pulse</h2>
+      <p>Vibrations in a colorless world. Sound without echo. Form without form. The illusion of rhythm in contrast.</p>
+    </div>
+    <div class="card">
+      <h2>Contrast</h2>
+      <p>High fidelity minimalism. A visual manifesto. Only the extremes, with no room for gray.</p>
+    </div>
+    <div class="card">
+      <h2>Silhouette</h2>
+      <p>Shape defined by void. Stories whispered in sharp edges. Figures carved from a sea of black.</p>
+    </div>
+    <div class="card">
+      <h2>Inversion</h2>
+      <p>Flip the script. What was light becomes shadow. A reversal of expectation. A mirror with no reflection.</p>
+    </div>
+    <div class="card">
+      <h2>Binary</h2>
+      <p>1 or 0. On or off. The digital soul in its rawest expression. A code without color, yet not without depth.</p>
+    </div>
+  </section>
+  <footer>
+    Monochrome Project &copy; 2025 — Black and White Forever
+  </footer>
 </body>
 </html>
